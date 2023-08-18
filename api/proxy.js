@@ -15,8 +15,8 @@ export default async (req, res) => {
       body: method !== 'GET' ? JSON.stringify(body) : undefined,
     });
 
+    console.log({response})
     const responseBody = await response.text();
-
     if (!response.ok) {
       // Get the original error status code from the backend response
       const originalStatusCode = response.status;
