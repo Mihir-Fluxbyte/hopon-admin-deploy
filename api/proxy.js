@@ -8,6 +8,8 @@ export default async (req, res) => {
   const apiUrl = `${backendUrl}${url.replace('/api/proxy', '')}`
   console.log({ method, headers, body, url, apiUrl  });
 
+  delete headers['transfer-encoding'];
+
   try {
     const response = await fetch(apiUrl, {
       method,
