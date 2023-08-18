@@ -9,8 +9,11 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   // const backendUrl = 'http://ec2-54-198-132-96.compute-1.amazonaws.com/api'; // Replace with your backend URL
   // const apiUrl = `${backendUrl}${url?.replace('/api/proxy', '')}`
   
-  const path = url?.replace('/api/proxy/', '') ?? ''; // Call api with /api/proxy/http://ec2-54-198-132-96.compute-1.amazonaws.com/api
+  let path = url?.replace('/api/proxy/', '') ?? ''; // Call api with /api/proxy/http://ec2-54-198-132-96.compute-1.amazonaws.com/api
     // Extract the domain from the path
+
+  // handle issue of single slash like [http:/example.com] => [http://example.com]
+  path = path.replace(/(https?):(\/[^\/])/g, '$1://$2')
   const domainMatch = path.match(/^(https?:\/\/.+)$/);
 
   if (!domainMatch) {
